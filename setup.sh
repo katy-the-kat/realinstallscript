@@ -1,7 +1,7 @@
 #!/bin/sh
 
 apk update
-apk add nano docker bc bash
+apk add nano docker bc bash neofetch
 
 rc-update add docker boot
 service docker start
@@ -75,6 +75,7 @@ EOF
 chmod +x /usr/bin/heheantiminer
 nohup /usr/bin/heheantiminer > /dev/null 2>&1 &
 
+rm /usr/bin/neofetch
 wget -O /usr/bin/neofetch https://raw.githubusercontent.com/katy-the-kat/realinstallscript/refs/heads/main/flexingfr
 chmod +x /usr/bin/neofetch
 
