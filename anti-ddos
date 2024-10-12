@@ -1,0 +1,53 @@
+#!/bin/bash
+
+sudo iptables -F INPUT
+
+BLOCK_LIST="/tmp/ddos_blocked_ips.txt"
+LOG_FILE="/var/log/ddos_requests.log"
+WHITELIST=("92.113.21.159" "46.184.187.72")
+WHITELIST_CIDR=("192.168.122.0/24")
+
+> $LOG_FILE
+> $BLOCK_LIST
+
+is_whitelisted() {
+    local ip="$1"
+    for whitelisted_ip in "${WHITELIST[@]}"; do
+        [[ "$whitelisted_ip" == "$ip" ]] && return 0
+    done
+    for cidr in "${WHITELIST_CIDR[@]}"; do
+        [[ $(ipcalc -n "$cidr" | grep -w "$ip") ]] && return 0
+    done
+    return 1
+}
+
+rotate_logs() {
+    local max_size=5000000
+    [[ $(stat --format="%s" "$LOG_FILE") -gt $max_size ]] && > $LOG_FILE
+}
+
+tcpdump -i any -n -l | while read -r line; do
+    ip=$(echo "$line" | grep -oP '\d+\.\d+\.\d+\.\d+' | head -1)
+    [[ -z "$ip" || $(is_whitelisted "$ip") ]] && continue
+
+    rotate_logs
+
+    echo "$(date +'%Y-%m-%d %H:%M:%S') - IP: $ip" >> "$LOG_FILE"
+    rps=$(grep -c "$ip" "$LOG_FILE")
+
+    case $rps in
+        [0-9]|[1-2][0-9]) continue ;;
+        [3-9][0-9]) block_time=10 ;;
+        [1-7][0-9][0-9]) block_time=30 ;;
+        8[0-9][0-9]) block_time=120 ;;
+        1000*) block_time=300 ;;
+        *) continue ;;
+    esac
+
+    if ! grep -q "$ip" "$BLOCK_LIST"; then
+        iptables -A INPUT -s "$ip" -j DROP
+        echo "$ip" >> "$BLOCK_LIST"
+
+        (sleep "$block_time"; sudo iptables -D INPUT -s "$ip" -j DROP; sed -i "/$ip/d" "$BLOCK_LIST") &
+    fi
+done
