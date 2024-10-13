@@ -1208,7 +1208,7 @@ get_distro() {
 }
 
 get_model() {
-    model="PowerEdge R7625"
+    model="PowerEdge R6615"
 }
 
 get_title() {
