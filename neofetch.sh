@@ -1208,7 +1208,7 @@ get_distro() {
 }
 
 get_model() {
-    model="KVM Server v2.0 R3 with SpaceFlare9 DDOS Protection (Is-a.space / discord.gg/hetzner)"
+    model="KVM Server v2.0 R4 (Is-a.space / discord.gg/hetzner)"
 }
 
 get_title() {
