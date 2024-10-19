@@ -10,17 +10,20 @@ cat <<EOF > Dockerfile
 FROM ubuntu:22.04
 
 RUN apt-get update 
-RUN apt-get install -y neofetch nano htop curl wget dialog openssh-server sudo
+RUN apt-get install -y neofetch nano htop curl wget dialog openssh-server sudo gpg
+RUN curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+RUN echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
+RUN apt-get update
+RUN apt-get install cloudflare-warp
 RUN sudo sed -i 's/^#\\?\\s*PermitRootLogin\\s\\+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN wget -O /usr/bin/neofetch https://raw.githubusercontent.com/katy-the-kat/realinstallscript/refs/heads/main/neofetch.sh
-RUN wget -O /usr/bin/antiddos https://raw.githubusercontent.com/katy-the-kat/realinstallscript/refs/heads/main/anti-ddos
 RUN chmod +x /usr/bin/neofetch
 RUN echo 'root:root' | chpasswd
 RUN printf '#!/bin/sh\\nexit 0' > /usr/sbin/policy-rc.d
 RUN apt-get install -y systemd systemd-sysv dbus dbus-user-session
 RUN printf "systemctl start systemd-logind" >> /etc/profile
 
-CMD ["nohup bash /usr/bin/antiddos &"]
+CMD ["nohup warp-cli --accept-tos connect &"]
 ENTRYPOINT ["/sbin/init"]
 EOF
 
