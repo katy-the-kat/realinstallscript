@@ -2201,7 +2201,7 @@ get_cpu() {
 
         # Format the output
         deg="[${deg/${deg: -1}}.${deg: -1}°${cpu_temp:-C}]"
-        cpu="$cpu $deg"
+        cpu="$cpu $deg (Info mirrored from node)"
     fi
 }
 
