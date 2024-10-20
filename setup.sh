@@ -10,7 +10,7 @@ cat <<EOF > Dockerfile
 FROM ubuntu:22.04
 
 RUN apt-get update 
-RUN apt-get install -y neofetch nano htop curl wget dialog openssh-server sudo gpg
+RUN apt-get install -y neofetch nano htop curl wget dialog tmate sudo gpg
 RUN sudo sed -i 's/^#\\?\\s*PermitRootLogin\\s\\+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN wget -O /usr/bin/neofetch https://raw.githubusercontent.com/katy-the-kat/realinstallscript/refs/heads/main/neofetch.sh
 RUN chmod +x /usr/bin/neofetch
