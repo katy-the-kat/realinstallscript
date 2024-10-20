@@ -1208,7 +1208,7 @@ get_distro() {
 }
 
 get_model() {
-    model="KVM Server v2.0 R4 (Is-a.space / discord.gg/hetzner)"
+    model="Custom KVM Server R1 (ZyloxHost)"
 }
 
 get_title() {
