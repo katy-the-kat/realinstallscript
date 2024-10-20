@@ -2184,11 +2184,11 @@ get_cpu() {
     # Add CPU speed to the output.
     if [[ "$cpu_speed" != "off" && "$speed" ]]; then
         if (( speed < 1000 )); then
-            cpu="$cpu @ ${speed}MHz"
+            cpu="$cpu @ ${speed}MHz (Info mirrored from node)"
         else
             [[ "$speed_shorthand" == "on" ]] && speed="$((speed / 100))"
             speed="${speed:0:1}.${speed:1}"
-            cpu="$cpu @ ${speed}GHz"
+            cpu="$cpu @ ${speed}GHz (Info mirrored from node)"
         fi
     fi
 
@@ -2201,7 +2201,7 @@ get_cpu() {
 
         # Format the output
         deg="[${deg/${deg: -1}}.${deg: -1}°${cpu_temp:-C}]"
-        cpu="$cpu $deg (Info mirrored from node)"
+        cpu="$cpu $deg"
     fi
 }
 
