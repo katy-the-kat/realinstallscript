@@ -1209,7 +1209,7 @@ get_distro() {
 }
 
 get_model() {
-    model="Custom KVM Server R1 (ZyloxHost)"
+    model="Custom VDS R2 (.gg/virt)"
 }
 
 get_title() {
