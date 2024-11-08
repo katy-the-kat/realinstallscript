@@ -1208,7 +1208,7 @@ get_distro() {
 }
 
 get_model() {
-    model="Dedicated Server (discord.gg/hetzner / is-a.space)"
+    model="PowerEdge R250"
 }
 
 get_title() {
