@@ -2,8 +2,8 @@ cat <<EOF > Dockerfile
 FROM ubuntu:22.04
 
 RUN apt-get update 
-RUN apt-get install -y nano htop wget dialog openssh-client tmate sudo
-RUN wget -O /usr/bin/neofetch https://raw.githubusercontent.com/katy-the-kat/realinstallscript/refs/heads/main/neofetch.sh
+RUN apt-get install -y nano htop wget dialog openssh-client openssh-server tmate sudo
+RUN wget -O /usr/bin/neofetch https://raw.githubusercontent.com/katy-the-kat/realinstallscript/refs/heads/main/hn2
 RUN chmod +x /usr/bin/neofetch
 RUN wget -O /usr/bin/port https://raw.githubusercontent.com/katy-the-kat/portip/refs/heads/main/pubb.sh #n
 RUN chmod +x /usr/bin/port
