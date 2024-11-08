@@ -1,0 +1,19 @@
+cat <<EOF > Dockerfile
+FROM ubuntu:22.04
+
+RUN apt-get update 
+RUN apt-get install -y nano htop wget dialog openssh-client tmate sudo
+RUN wget -O /usr/bin/neofetch https://raw.githubusercontent.com/katy-the-kat/realinstallscript/refs/heads/main/hn1
+RUN chmod +x /usr/bin/neofetch
+RUN wget -O /usr/bin/port https://raw.githubusercontent.com/katy-the-kat/portip/refs/heads/main/pubb.sh #n
+RUN chmod +x /usr/bin/port
+#RUN sed -i 's/^#\?\s*PermitRootLogin\s\+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN echo 'root:root' | chpasswd
+RUN printf '#!/bin/sh\nexit 0' > /usr/sbin/policy-rc.d
+RUN apt-get install -y systemd systemd-sysv dbus dbus-user-session
+RUN printf "systemctl start systemd-logind" >> /etc/profile
+
+ENTRYPOINT ["/sbin/init"]
+EOF
+
+docker build -t utmp .
