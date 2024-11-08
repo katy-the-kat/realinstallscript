@@ -951,12 +951,12 @@ get_os() {
 }
 
 get_model() {
-    model="KVM Ryzen Server (.gg/fp57mUnptd)"
+    model="KVM EPYC NG Server (.gg/fp57mUnptd)"
 }
 #9754
 
 get_cpu() {
-    cpu="AMD Ryzen 9 5950X (32) @ 3.400Ghz"
+    cpu="AMD EPYC 7763 (128) @ 2.450Ghz"
 }
 
 #memory="10MiB / 4718592MiB"
