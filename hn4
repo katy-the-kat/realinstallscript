@@ -71,7 +71,7 @@ print_info() {
     info "Terminal" term
     info "Terminal Font" term_font
     info "CPU" cpu
-#    info "GPU" gpu
+    info "GPU" gpu
     info "Memory" memory
 
     # info "GPU Driver" gpu_driver  # Linux/macOS only
@@ -957,6 +957,10 @@ get_model() {
 
 get_cpu() {
     cpu="AMD EPYC 7763 (128) @ 2.450Ghz"
+}
+
+get_gpu() {
+    gpu="62:00.0 Matrox Electronics Systems Ltd. Integrated Matrox G200eR2"
 }
 
 get_memory() {
