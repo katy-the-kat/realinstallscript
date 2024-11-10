@@ -1089,7 +1089,7 @@ get_memory() {
         ;;
     esac
 
-    memory="${mem_used}${mem_label:-MiB} / 524288MiB"
+    memory="${mem_used}${mem_label:-MiB} / 772494MiB"
 
     # Bars.
     case $memory_display in
