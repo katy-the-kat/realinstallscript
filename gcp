@@ -951,16 +951,12 @@ get_os() {
 }
 
 get_model() {
-    model="PowerEdge C6525"
+    model="Google Compute Engine"
 }
 #9754
 
 get_cpu() {
-    cpu="AMD EPYC 7763 (128) @ 2.450Ghz"
-}
-
-get_gpu() {
-    gpu="62:00.0 Matrox Electronics Systems Ltd. Integrated Matrox G200eR2"
+    cpu="Intel Xeon (96) @ 2.199GHz"
 }
 
 get_memory() {
