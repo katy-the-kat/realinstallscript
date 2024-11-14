@@ -4,7 +4,7 @@ echo " Static hostname: $HOSTNAME
       Machine ID: bfa521710a4648f19f4fa682ab37ad18
          Boot ID: 325305602163472c9fa31beb0c6ddb75
     Product UUID: a000c6d3-60d1-402a-baa4-97291e116eaf
-  Virtualization: kvm
+  Virtualization: KVM-VDS
 Operating System: Ubuntu 22.04.5 LTS                                
           Kernel: Linux 6.11.7-arch1-1
     Architecture: x86-64
