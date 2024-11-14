@@ -1,0 +1,45 @@
+echo "Architecture:             x86_64
+  CPU op-mode(s):         32-bit, 64-bit
+  Address sizes:          40 bits physical, 48 bits virtual
+  Byte Order:             Little Endian
+CPU(s):                   128
+  On-line CPU(s) list:    0-127
+Vendor ID:                AuthenticAMD
+  Model name:             AMD EPYC 7763 Processor
+    CPU family:           23
+    Model:                1
+    Thread(s) per core:   128
+    Core(s) per socket:   64
+    Socket(s):            1
+    Stepping:             2
+    BogoMIPS:             5426.97
+    Flags:                fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx pdpe1gb rdtscp lm nopl xtopology c
+                          puid tsc_known_freq pni pclmulqdq vmx ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefe
+                          tch topoext cpuid_fault pti fsgsbase bmi1 avx2 smep bmi2 rdseed adx smap clflushopt xsaveopt xsavec xgetbv1 arat
+Virtualization features:  
+  Virtualization:         VT-x
+  Hypervisor vendor:      KVM-VDS
+  Virtualization type:    full
+Caches (sum of all):      
+  L1d:                    4 MiB (128 instances)
+  L1i:                    8 MiB (128 instances)
+  L2:                     32 MiB (64 instances)
+  L3:                     8 MiB (1 instance)
+NUMA:                     
+  NUMA node(s):           1
+  NUMA node0 CPU(s):      0-127
+Vulnerabilities:          
+  Gather data sampling:   Not affected
+  Itlb multihit:          KVM: Mitigation: VMX disabled
+  L1tf:                   Mitigation; PTE Inversion
+  Mds:                    Vulnerable: Clear CPU buffers attempted, no microcode; SMT Host state unknown
+  Meltdown:               Mitigation; PTI
+  Mmio stale data:        Unknown: No mitigations
+  Reg file data sampling: Not affected
+  Retbleed:               Not affected
+  Spec rstack overflow:   Not affected
+  Spec store bypass:      Vulnerable
+  Spectre v1:             Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+  Spectre v2:             Mitigation; Retpolines; STIBP disabled; RSB filling; PBRSB-eIBRS Not affected; BHI Retpoline
+  Srbds:                  Not affected
+  Tsx async abort:        Not affected"
