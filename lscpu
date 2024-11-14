@@ -17,7 +17,7 @@ Vendor ID:                AuthenticAMD
                           puid tsc_known_freq pni pclmulqdq vmx ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefe
                           tch topoext cpuid_fault pti fsgsbase bmi1 avx2 smep bmi2 rdseed adx smap clflushopt xsaveopt xsavec xgetbv1 arat
 Virtualization features:  
-  Virtualization:         VT-x
+  Virtualization:         AMD-V
   Hypervisor vendor:      KVM-VDS
   Virtualization type:    full
 Caches (sum of all):      
