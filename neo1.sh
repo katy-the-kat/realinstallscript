@@ -956,11 +956,11 @@ get_model() {
 #9754
 
 get_cpu() {
-    cpu="Intel Xeon 6960P (144) @ 2.690Ghz"
+    cpu="KVM KXS 96C 192T (144) @ 2.900Ghz"
 }
 
 get_gpu() {
-    gpu="Non-GPU VPS (discord.gg/wix)"
+    gpu="Non-GPU KVM Xeon Server (discord.gg/wix)"
 }
 
 get_memory() {
