@@ -951,16 +951,16 @@ get_os() {
 }
 
 get_model() {
-    model="PowerEdge XE9680"
+    model="MacBookAir10,1"
 }
 #9754
 
 get_cpu() {
-    cpu="Intel Xeon 6960P (144) @ 2.690Ghz"
+    cpu="Apple M1"
 }
 
 get_gpu() {
-    gpu="NVIDIA Geforce RTX 4090"
+    gpu="Apple M1"
 }
 
 get_memory() {
