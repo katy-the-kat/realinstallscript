@@ -58,7 +58,6 @@ print_info() {
 
     info "OS" distro
     info "Host" model
-    info "Kernel" kernel
     info "Uptime" uptime
     info "Packages" packages
     info "Shell" shell
@@ -71,7 +70,6 @@ print_info() {
     info "Terminal" term
     info "Terminal Font" term_font
     info "CPU" cpu
-    info "GPU" gpu
     info "Memory" memory
 
     # info "GPU Driver" gpu_driver  # Linux/macOS only
