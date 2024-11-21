@@ -951,12 +951,12 @@ get_os() {
 }
 
 get_model() {
-    model="PowerEdge C6525"
+    model="PowerEdge R960"
 }
 #9754
 
 get_cpu() {
-    cpu="AMD EPYC 7763 (128) @ 2.450Ghz"
+    cpu="Intel Xeon Platinum 8490H (120) @ 1.900Ghz"
 }
 
 get_memory() {
@@ -1101,7 +1101,7 @@ get_memory() {
         ;;
     esac
 
-    memory="${mem_used}${mem_label:-MiB} / 772494MiB"
+    memory="${mem_used}${mem_label:-MiB} / 15258789MiB"
 
     # Bars.
     case $memory_display in
