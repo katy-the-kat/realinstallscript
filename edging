@@ -959,7 +959,7 @@ get_node() {
 }
 
 get_cpu() {
-    cpu="Intel Xeon Gold 5115 @ 2.400GHz"
+    cpu="Intel Xeon Silver 4110 (16) @ 2.100GHz"
 }
 
 get_gpu() {
