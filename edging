@@ -956,7 +956,7 @@ get_model() {
 #9754
 
 get_node() {
-    model="PowerEdge R640"
+    node="PowerEdge R640"
 }
 
 get_cpu() {
