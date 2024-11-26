@@ -1,14 +1,14 @@
-echo " Static hostname: $HOSTNAME
-       Icon name: computer-vm
-         Chassis: vm 🖴
-      Machine ID: bfa521710a4648f19f4fa682ab37ad18
-         Boot ID: 325305602163472c9fa31beb0c6ddb75
-    Product UUID: a000c6d3-60d1-402a-baa4-97291e116eaf
-  Virtualization: kvm
-Operating System: Ubuntu 22.04.5 LTS                                
-          Kernel: Linux 6.11.7-arch1-1
-    Architecture: x86-64
- Hardware Vendor: QEMU
-  Hardware Model: Standard PC _Q35 + ICH9, 2009_
-Firmware Version: rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org
-   Firmware Date: Tue 2024-11-14"
+echo "
+   Static hostname: VM
+Transient hostname: $HOSTNAME
+         Icon name: computer-vm
+           Chassis: vm 🖴
+    Virtualization: kvm
+  Operating System: Ubuntu 22.04.5 LTS       
+            Kernel: Linux 6.1.0-23-cloud-amd64
+      Architecture: x86-64
+   Hardware Vendor: vKVM
+    Hardware Model: vKVM Is-a.space Compute Platform
+  Firmware Version: 1.15.0-1
+     Frimeware age: 2023-01-01
+"
