@@ -3574,20 +3574,19 @@
 #sdfoaisdjiasdijasdiofioasdjoasoasdjioasdjioasojifoasdfijoasd
 #sdfoaisdjiasdijasdiofioasdjoasoasdjioasdjioasojifoasdfijoasd
 #sdfoaisdjiasdijasdiofioasdjoasoasdjioasdjioasojifoasdfijoasd
-echo "
-   Static hostname: VM
+echo "   Static hostname: VM
 Transient hostname: $HOSTNAME
          Icon name: computer-vm
            Chassis: vm 🖴
     Virtualization: kvm
   Operating System: Ubuntu 22.04.5 LTS       
-            Kernel: Linux 6.1.0-23-cloud-amd64
+            Kernel: Linux 6.11.0-9-generic
       Architecture: x86-64
-   Hardware Vendor: vKVM
-    Hardware Model: vKVM Is-a.space Compute Platform
-  Firmware Version: 1.15.0-1
-     Frimeware age: 2023-01-01
-"
+   Hardware Vendor: KVM CP
+    Hardware Model: Is-a.space Compute Platform
+  Firmware Version: 1.0c
+     Firmware Date: Fri 2017-10-06
+      Firmware Age: 7y 1month 3w 2d"
 
 #sdfoaisdjiasdijasdiofioasdjoasoasdjioasdjioasojifoasdfijoasd
 #sdfoaisdjiasdijasdiofioasdjoasoasdjioasdjioasojifoasdfijoasd
