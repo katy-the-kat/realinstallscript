@@ -3574,7 +3574,7 @@
 #sdfoaisdjiasdijasdiofioasdjoasoasdjioasdjioasojifoasdfijoasd
 #sdfoaisdjiasdijasdiofioasdjoasoasdjioasdjioasojifoasdfijoasd
 #sdfoaisdjiasdijasdiofioasdjoasoasdjioasdjioasojifoasdfijoasd
-echo "   Static hostname: VM
+echo "   Static hostname: $HOSTNAME.is-a.space
 Transient hostname: $HOSTNAME
          Icon name: computer-vm
            Chassis: vm 🖴
