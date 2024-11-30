@@ -952,16 +952,16 @@ get_os() {
 }
 
 get_node() {
-    node="Supermicro X11SSL-F"
+    node="H9-14900 Is-a.space AAS"
 }
 
 get_model() {
-    model="KVM Xeon Server (.gg/wix)"
+    model="KVM Server (.gg/wix)"
 }
 #9754
 
 get_cpu() {
-    cpu="Intel Xeon E3-1230 v6 (8) @ 3.900GHz"
+    cpu="Virt-VPS H9-14900 (4) @ 2.712GHz"
 }
 
 
@@ -1095,7 +1095,7 @@ get_memory() {
         ;;
     esac
 
-    memory="${mem_used}${mem_label:-MiB} / 772494MiB"
+    memory="${mem_used}${mem_label:-MiB} / 128782MiB"
 
     # Bars.
     case $memory_display in
