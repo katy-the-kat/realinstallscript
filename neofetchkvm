@@ -71,7 +71,7 @@ print_info() {
     info "Terminal" term
     info "Terminal Font" term_font
     info "CPU" cpu
-#    info "GPU" gpu
+    info "GPU" gpux
     info "Memory" memory
 
     # info "GPU Driver" gpu_driver  # Linux/macOS only
@@ -951,7 +951,7 @@ get_os() {
 }
 
 get_model() {
-    model="KVM XE-Gen11 Server VMW (.gg/wix)"
+    model="KVM XE-Gen11 Server VMW-440BX (.gg/wix)"
 }
 
 get_node() {
@@ -962,6 +962,11 @@ get_node() {
 
 get_cpu() {
     cpu="XE-Intel-Gen11 Limited (4) @ 2.712GHz"
+}
+
+
+get_gpux() {
+    gpux="XE-Intel-Gen11 VMware SVGA vGPU"
 }
 
 get_memory() {
