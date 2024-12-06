@@ -949,12 +949,12 @@ get_os() {
 }
 
 get_model() {
-    model="PowerEdge R7525"
+    model="PowerEdge R6515"
 }
 #9754
 
 get_cpu() {
-    cpu="AMD EPYC 7313P (64) @ 3.000Ghz"
+    cpu="AMD EPYC 74F3 (48) @ 3.200Ghz"
 }
 
 get_memory() {
@@ -1099,7 +1099,7 @@ get_memory() {
         ;;
     esac
 
-    memory="${mem_used}${mem_label:-MiB} / 772494MiB"
+    memory="${mem_used}${mem_label:-MiB} / 65535MiB"
 
     # Bars.
     case $memory_display in
