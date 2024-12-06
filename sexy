@@ -949,12 +949,12 @@ get_os() {
 }
 
 get_model() {
-    model="PowerEdge C6525"
+    model="PowerEdge R7525"
 }
 #9754
 
 get_cpu() {
-    cpu="AMD EPYC 7763 (128) @ 2.450Ghz"
+    cpu="AMD EPYC 7313P (64) @ 3.000Ghz"
 }
 
 get_memory() {
