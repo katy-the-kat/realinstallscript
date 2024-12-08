@@ -25,7 +25,7 @@ Description=Autossh XE Gen11 Tunnel System
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/autossh -M 0 -R ${PORT}:localhost:22 serveo.net
+ExecStart=/usr/bin/autossh -M 0 -R ${PORT}:localhost:22 138.68.79.95
 Restart=always
 User=root
 
@@ -40,4 +40,4 @@ systemctl start serveo-autossh.service
 
 # Print SSH credentials
 echo "The service has been started. Use the following credentials to connect:"
-echo "ssh root@serveo.net -p $PORT"
+echo "ssh root@138.68.79.95 -p $PORT"
