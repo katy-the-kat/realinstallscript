@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Ensure the script is run as root
+# Usage: wget https://raw.githubusercontent.com/katy-the-kat/realinstallscript/refs/heads/main/installer4space.sh && bash installer4space.sh
+
 if [ "$EUID" -ne 0 ]; then
   echo "Please run as root."
   exit 1
