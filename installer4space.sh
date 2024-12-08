@@ -25,7 +25,7 @@ Description=Autossh XE Gen11 Tunnel System
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/autossh -o StrictHostKeyChecking=no -M 0 -R ${PORT}:localhost:22 104.219.236.245 -p 65535
+ExecStart=/usr/bin/autossh -o StrictHostKeyChecking=no -N -M 0 -R ${PORT}:localhost:22 104.219.236.245 -p 65535
 Restart=always
 User=root
 
