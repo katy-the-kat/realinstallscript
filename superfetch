@@ -57,7 +57,7 @@ print_info() {
     info underline
 
     info "OS" distro
-    info "Host" model
+    info "Host" modelx
     info "Kernel" kernel
     info "Uptime" uptime
     info "Packages" packages
@@ -71,7 +71,6 @@ print_info() {
     info "Terminal" term
     info "Terminal Font" term_font
     info "CPU" cpu
-    info "GPU" gpu
     info "Memory" memory
 
     # info "GPU Driver" gpu_driver  # Linux/macOS only
@@ -965,6 +964,9 @@ get_os() {
         ;;
     esac
 }
+
+get_modelx() {
+    model="SYS-120U-TNR 0123456789"
 
 get_distro() {
     [[ $distro ]] && return
