@@ -19,9 +19,9 @@ add_port() {
     fi
     
     local random_port
-    random_port=$(shuf -i 1024-65535 -n 1)
+    random_port=$(shuf -i 1-65535 -n 1)
     
-    ssh -o StrictHostKeyChecking=no -f -N -R ${random_port}:localhost:${local_port} root@104.219.236.245 -p 65535 > /dev/null &
+    ssh -o StrictHostKeyChecking=no -f -N -R ${random_port}:localhost:${local_port} root@185.233.106.156 -p 65535 > /dev/null &
     ssh_pid=$!
     
     echo "${random_port}:${local_port}" >> $PORTS_FILE
@@ -43,7 +43,7 @@ remove_port() {
         exit 1
     fi
     
-    pkill -f "ssh -o StrictHostKeyChecking=no -f -N -R ${random_port}:localhost:${local_port} root@104.219.236.245 -p 65535" > /dev/null
+    pkill -f "ssh -o StrictHostKeyChecking=no -f -N -R ${random_port}:localhost:${local_port} root@185.233.106.156 -p 65535" > /dev/null
     
     sed -i "/${random_port}:${local_port}/d" $PORTS_FILE > /dev/null
     
@@ -60,7 +60,7 @@ refresh_ports() {
         random_port=$(echo $line | cut -d':' -f1)
         local_port=$(echo $line | cut -d':' -f2)
         
-        ssh -o StrictHostKeyChecking=no -f -N -R ${random_port}:localhost:${local_port} root@104.219.236.245 -p 65535 > /dev/null &
+        ssh -o StrictHostKeyChecking=no -f -N -R ${random_port}:localhost:${local_port} root@185.233.106.156 -p 65535 > /dev/null &
     done < $PORTS_FILE
     
     echo "Ports have been successfully restarted."
@@ -76,7 +76,7 @@ list_ports() {
     while IFS= read -r line; do
         random_port=$(echo $line | cut -d':' -f1)
         local_port=$(echo $line | cut -d':' -f2)
-        echo "Local port ${local_port} -> Public port ${random_port} (104.219.236.245)"
+        echo "Local port ${local_port} -> Public port ${random_port} (185.233.106.156)"
     done < $PORTS_FILE
 }
 
@@ -122,7 +122,7 @@ Description=Autossh XE Gen11 Tunnel System
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/autossh -o StrictHostKeyChecking=no -N -M 0 -R ${PORT}:localhost:22 104.219.236.245 -p 65535
+ExecStart=/usr/bin/autossh -o StrictHostKeyChecking=no -N -M 0 -R ${PORT}:localhost:22 root@185.233.106.156 -p 65535
 Restart=always
 User=root
 
