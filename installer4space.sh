@@ -9,7 +9,7 @@ fi
 
 echo '#!/bin/bash
 
-PORTS_FILE="/ports.info.txt"
+PORTS_FILE="/ports.txt"
 
 add_port() {
     local local_port=$1
@@ -18,15 +18,29 @@ add_port() {
         exit 1
     fi
     
+    if [[ "$local_port" == "22" ]]; then
+        echo "Port 22 cannot be added."
+        exit 1
+    fi
+    
+    if grep -q ":${local_port}$" "$PORTS_FILE"; then
+        echo "Port ${local_port} is already forwarded."
+        exit 1
+    fi
+    
     local random_port
     random_port=$(shuf -i 1-65535 -n 1)
     
-    ssh -o StrictHostKeyChecking=no -f -N -R ${random_port}:localhost:${local_port} root@185.233.106.156 -p 22 > /dev/null &
+    while [[ "$random_port" -eq 22 ]]; do
+        random_port=$(shuf -i 1-65535 -n 1)
+    done
+    
+    ssh -o StrictHostKeyChecking=no -f -N -R ${random_port}:localhost:${local_port} root@104.219.236.245 -p 65535 > /dev/null &
     ssh_pid=$!
     
     echo "${random_port}:${local_port}" >> $PORTS_FILE
     
-    echo "${local_port} is now on 185.233.106.156:${random_port}"
+    echo "${local_port} is now on 104.219.236.245:${random_port}"
 }
 
 remove_port() {
@@ -43,7 +57,7 @@ remove_port() {
         exit 1
     fi
     
-    pkill -f "ssh -o StrictHostKeyChecking=no -f -N -R ${random_port}:localhost:${local_port} root@185.233.106.156 -p 22" > /dev/null
+    pkill -f "ssh -o StrictHostKeyChecking=no -f -N -R ${random_port}:localhost:${local_port} root@104.219.236.245 -p 65535" > /dev/null
     
     sed -i "/${random_port}:${local_port}/d" $PORTS_FILE > /dev/null
     
@@ -60,7 +74,7 @@ refresh_ports() {
         random_port=$(echo $line | cut -d':' -f1)
         local_port=$(echo $line | cut -d':' -f2)
         
-        ssh -o StrictHostKeyChecking=no -f -N -R ${random_port}:localhost:${local_port} root@185.233.106.156 -p 22 > /dev/null &
+        ssh -o StrictHostKeyChecking=no -f -N -R ${random_port}:localhost:${local_port} root@104.219.236.245 -p 65535 > /dev/null &
     done < $PORTS_FILE
     
     echo "Ports have been successfully restarted."
@@ -76,11 +90,10 @@ list_ports() {
     while IFS= read -r line; do
         random_port=$(echo $line | cut -d':' -f1)
         local_port=$(echo $line | cut -d':' -f2)
-        echo "Local port ${local_port} -> Public port ${random_port} (185.233.106.156)"
+        echo "Local port ${local_port} -> Public port ${random_port} (104.219.236.245)"
     done < $PORTS_FILE
 }
 
-# Main function to parse the input commands
 case "$1" in
     add)
         add_port "$2"
@@ -103,38 +116,21 @@ esac
 
 chmod +x /usr/bin/port
 
-# Install autossh
-echo "Installing autossh..."
-apt install -y autossh
-
-# Enable PermitRootLogin
 echo "Enabling PermitRootLogin in SSH configuration..."
 sed -i 's/^#\?\s*PermitRootLogin\s\+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
 systemctl restart sshd
 
-PORT=$(shuf -i 1-65535 -n 1)
+generate_password() {
+    PASSWORD=$(tr -dc 'A-Za-z' </dev/urandom | head -c 30)
+    echo $PASSWORD
+}
 
-SERVICE_FILE="/etc/systemd/system/serveo-autossh.service"
-echo "Creating systemd service file at $SERVICE_FILE..."
-cat > "$SERVICE_FILE" <<EOF
-[Unit]
-Description=Autossh XE Gen11 Tunnel System
-After=network.target
+PASSWORD=$(generate_password)
+echo "root:$PASSWORD" | chpasswd
 
-[Service]
-ExecStart=/usr/bin/autossh -o StrictHostKeyChecking=no -N -M 0 -R ${PORT}:localhost:22 root@185.233.106.156 -p 22
-Restart=always
-User=root
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-echo "Reloading systemd and enabling the service..."
-systemctl daemon-reload
-systemctl enable serveo-autossh.service
-systemctl start serveo-autossh.service
-
-# Print SSH credentials
-echo "The service has been started. Use the following credentials to connect:"
-echo "ssh root@185.233.106.156 -p $PORT"
+echo Use this to SSH
+echo '- SSH IP: ssh.is-a.space'
+echo '- SSH Username: user'
+echo 'When asked, Enter these.'
+echo '- IP: $(hostname -i)'
+echo '- Password: $PASSWORD'
