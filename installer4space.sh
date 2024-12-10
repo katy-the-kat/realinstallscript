@@ -112,7 +112,7 @@ echo "Enabling PermitRootLogin in SSH configuration..."
 sed -i 's/^#\?\s*PermitRootLogin\s\+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
 systemctl restart sshd
 
-PORT=$(shuf -i 1025-65535 -n 1)
+PORT=$(shuf -i 1-65535 -n 1)
 
 SERVICE_FILE="/etc/systemd/system/serveo-autossh.service"
 echo "Creating systemd service file at $SERVICE_FILE..."
