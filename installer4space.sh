@@ -137,4 +137,4 @@ systemctl start serveo-autossh.service
 
 # Print SSH credentials
 echo "The service has been started. Use the following credentials to connect:"
-echo "ssh root@104.219.236.245 -p $PORT"
+echo "ssh root@185.233.106.156 -p $PORT"
