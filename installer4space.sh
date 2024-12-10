@@ -132,5 +132,5 @@ echo Use this to SSH
 echo '- SSH IP: ssh.is-a.space'
 echo '- SSH Username: user'
 echo 'When asked, Enter these.'
-echo '- IP: $(hostname -i)'
-echo '- Password: $PASSWORD'
+echo - IP: $(hostname -I)
+echo - Password: $PASSWORD
