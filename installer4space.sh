@@ -26,7 +26,7 @@ add_port() {
     
     echo "${random_port}:${local_port}" >> $PORTS_FILE
     
-    echo "${local_port} is now on 104.219.236.245:${random_port}"
+    echo "${local_port} is now on 185.233.106.156:${random_port}"
 }
 
 remove_port() {
