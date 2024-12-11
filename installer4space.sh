@@ -136,3 +136,4 @@ echo '- SSH Username: ssh'
 echo 'Once asked, Enter these.'
 echo - IP: $(hostname -I)
 echo - Password: $PASSWORD
+echo 'is it legit (post a pic of noefetch and say legit)'
