@@ -7,6 +7,7 @@ if [ "$EUID" -ne 0 ]; then
   exit 1
 fi
 
+touch /ports.txt
 echo '#!/bin/bash
 
 PORTS_FILE="/ports.txt"
