@@ -133,7 +133,11 @@ clear
 echo Use this to SSH
 echo '- SSH IP: ssh.is-a.space'
 echo '- SSH Username: ssh'
-echo 'Once asked, Enter these.'
+echo '- Token: $EnterAToken'
+echo 'is it legit (post a pic of noefetch and say legit)'
+echo
+echo For staff:
+echo Please enter these into /generate_token
 echo - IP: $(hostname -I)
 echo - Password: $PASSWORD
-echo 'is it legit (post a pic of noefetch and say legit)'
+echo /generate_token ip:$(hostname -I) password:$PASSWORD
