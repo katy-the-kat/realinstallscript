@@ -1,0 +1,96 @@
+#!/bin/bash
+
+clear
+
+# Color Codes
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+WHITE='\033[1;37m'
+RESET='\033[0m'
+
+# Emojis
+CPU_EMOJI="💻"
+RAM_EMOJI="📈"
+STORAGE_EMOJI="📁"
+CONNECT_EMOJI="🔗"
+ERROR_EMOJI="⚠️"
+ERROR_EMOJI_V2="❌"
+SUCCESS_EMOJI="✅"
+
+# Graceful Exit on Interrupt
+trap 'echo -e "\n\n${RED}${ERROR_EMOJI_V2} Script interrupted. Exiting with status 1.${RESET}\n"; exit 1' SIGINT
+
+# Display the banner
+display_banner() {
+  echo -e "${CYAN}"
+  figlet XE-Gen11
+  echo -e "${WHITE}A Free/Paid VPS Hosting Company with 2.5K+ Members (discord.gg/kvm)${RESET}"
+  echo -e "${GREEN}======================================${RESET}"
+  echo
+  echo -e "Node Usage${RESET}"
+  echo -e " ${RAM_EMOJI}  RAM: ${WHITE}$ram_usage${RESET}"
+  echo -e " ${CPU_EMOJI}  CPU: ${WHITE}$cpu_usage${RESET}"
+  echo -e " ${STORAGE_EMOJI}  Storage: ${WHITE}$storage_usage${RESET}"
+  echo
+}
+
+# Retrieve RAM usage
+# Retrieve RAM usage
+get_ram_usage() {
+  total_ram=$(free -m | awk '/^Mem:/ {print $2}')
+  used_ram=$(free -m | awk '/^Mem:/ {print $3}')
+  
+  # Check if used RAM is less than 1024MB (1GB)
+  if [ "$used_ram" -lt 1024 ]; then
+    # Display in MB if used RAM is less than 1024MB
+    echo "${used_ram}MB / 36TB"
+  else
+    # Display in GB if used RAM is 1024MB (1GB) or more
+    used_ram_gb=$(echo "scale=2; $used_ram/1024" | bc)
+    total_ram_gb=$(echo "scale=2; $total_ram/1024" | bc)
+    echo "${used_ram_gb}GB / 36TB"
+  fi
+}
+
+
+# Retrieve CPU usage
+get_cpu_usage() {
+  cpu_cores=$(nproc)
+  cpu_usage=$(top -b -n1 | grep "Cpu(s)" | awk -F'[,]' '{usage=100 - $4; print usage}')
+  
+  cpu_usage=$(echo "$cpu_usage / $cpu_cores" | bc -l)
+  cpu_usage=$(echo "$cpu_usage" | awk '{if($1>100) $1=100; print $1}')
+  
+  echo "${cpu_usage}%"
+}
+
+# Retrieve storage usage
+get_storage_usage() {
+  total_storage=$(df -h --total | grep "total" | awk '{print $2}')
+  used_storage=$(df -h --total | grep "total" | awk '{print $3}')
+  usage_percentage=$(df -h --total | grep "total" | awk '{print $5}')
+  echo "${usage_percentage} / 1.3TB"
+}
+
+# Populate resource usage stats
+ram_usage=$(get_ram_usage)
+cpu_usage=$(get_cpu_usage)
+storage_usage=$(get_storage_usage)
+
+# Display the welcome banner
+display_banner
+
+echo Started temp vps
+echo Rules are
+echo "- Your storage is temp (after you exit then your VPS data is gone, Besure to use our free 8GB RAM 8core VPS service at discord.gg/kvm for a better exp"
+echo "- You do NOT have a IPv4, Use something like serveo.net."
+echo "- You cant crypto mine because this is a 0.5core 1GB RAM VPS so your hashrate is misrable"
+echo "- You shouldnt do illegal stuff"
+echo "- You can make this 24/7 but your ssh must die at some point"
+echo "You can escape by using our 8GB RAM 8core VPS services."
+echo "Love from discord.gg/kvm staff."
+echo -e "${GREEN}======================================${RESET}"
+docker run -it --rm ubuntu:22.04
