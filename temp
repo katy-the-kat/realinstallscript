@@ -25,6 +25,7 @@ trap 'echo -e "\n\n${RED}${ERROR_EMOJI_V2} Script interrupted. Exiting with stat
 
 # Display the banner
 display_banner() {
+  clear
   echo -e "${CYAN}"
   figlet XE-Gen11
   echo -e "${WHITE}A Free/Paid VPS Hosting Company with 2.5K+ Members (discord.gg/kvm)${RESET}"
@@ -67,7 +68,7 @@ get_cpu_usage() {
   echo "${cpu_usage}%"
 }
 
-# Retrieve storage usage
+5B# Retrieve storage usage
 get_storage_usage() {
   total_storage=$(df -h --total | grep "total" | awk '{print $2}')
   used_storage=$(df -h --total | grep "total" | awk '{print $3}')
@@ -95,4 +96,4 @@ echo "Love from discord.gg/kvm staff."
 echo ""
 echo -e "${GREEN}======================================${RESET}"
 echo ""
-docker run -it --rm ubuntu:2
+docker run -it --rm --memory 1G --cpus 0.50 ubuntu:2
