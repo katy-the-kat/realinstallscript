@@ -96,4 +96,4 @@ echo "Love from discord.gg/kvm staff."
 echo ""
 echo -e "${GREEN}======================================${RESET}"
 echo ""
-docker run -it --rm --memory 1G --cpus 0.50 ubuntu:2
+docker run -it --rm --memory 1G --cpus 0.50 ubuntu:22.04
