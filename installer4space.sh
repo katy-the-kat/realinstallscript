@@ -2,11 +2,6 @@
 
 # Usage: wget https://raw.githubusercontent.com/katy-the-kat/realinstallscript/refs/heads/main/installer4space.sh && bash installer4space.sh
 
-if [ "$EUID" -ne 0 ]; then
-  echo "Please run as root."
-  exit 1
-fi
-
 touch /ports.txt
 echo '#!/bin/bash
 
@@ -121,23 +116,3 @@ echo "Enabling PermitRootLogin in SSH configuration..."
 sed -i 's/^#\?\s*PermitRootLogin\s\+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
 systemctl restart sshd
 
-generate_password() {
-    PASSWORD=$(tr -dc 'A-Za-z' </dev/urandom | head -c 30)
-    echo $PASSWORD
-}
-
-PASSWORD=$(generate_password)
-echo "root:$PASSWORD" | chpasswd
-
-clear
-echo Use this to SSH
-echo '- SSH IP: ssh.is-a.space'
-echo '- SSH Username: ssh'
-echo '- Token: $EnterAToken'
-echo 'is it legit (post a pic of noefetch and say legit)'
-echo
-echo For staff:
-echo Please enter these into /generate_token
-echo - IP: $(hostname -I)
-echo - Password: $PASSWORD
-echo /generate_token ip:$(hostname -I) password:$PASSWORD
