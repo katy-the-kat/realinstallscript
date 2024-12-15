@@ -12,11 +12,11 @@ WHITE='\033[1;37m'
 RESET='\033[0m'
 
 # Emojis
-CPU_EMOJI="💻"
-RAM_EMOJI="📈"
-STORAGE_EMOJI="📁"
-CONNECT_EMOJI="🔗"
-ERROR_EMOJI="⚠️"
+CPU_EMOJI="💻
+RAM_EMOJI="📈
+STORAGE_EMOJI="📁
+CONNECT_EMOJI="🔗
+ERROR_EMOJI="⚠"
 ERROR_EMOJI_V2="❌"
 SUCCESS_EMOJI="✅"
 
@@ -31,9 +31,9 @@ display_banner() {
   echo -e "${GREEN}======================================${RESET}"
   echo
   echo -e "Node Usage${RESET}"
-  echo -e " ${RAM_EMOJI}  RAM: ${WHITE}$ram_usage${RESET}"
-  echo -e " ${CPU_EMOJI}  CPU: ${WHITE}$cpu_usage${RESET}"
-  echo -e " ${STORAGE_EMOJI}  Storage: ${WHITE}$storage_usage${RESET}"
+  echo -e " ${RAM_EMOJI} RAM:   ${WHITE}$ram_usage${RESET}"
+  echo -e " ${CPU_EMOJI} CPU:   ${WHITE}$cpu_usage${RESET}"
+  echo -e " ${STORAGE_EMOJI} Storage:   ${WHITE}$storage_usage${RESET}"
   echo
 }
 
@@ -92,5 +92,7 @@ echo "- You shouldnt do illegal stuff"
 echo "- You can make this 24/7 but your ssh must die at some point"
 echo "You can escape by using our 8GB RAM 8core VPS services."
 echo "Love from discord.gg/kvm staff."
+echo ""
 echo -e "${GREEN}======================================${RESET}"
-docker run -it --rm ubuntu:22.04
+echo ""
+docker run -it --rm ubuntu:2
