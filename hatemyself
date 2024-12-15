@@ -14,7 +14,7 @@ RESET='\033[0m'
 # Emojis
 CPU_EMOJI="💻"
 RAM_EMOJI="📈"
-STORAGE_EMOJI="🗂️"
+STORAGE_EMOJI="📁"
 CONNECT_EMOJI="🔗"
 ERROR_EMOJI="⚠️"
 ERROR_EMOJI_V2="❌"
@@ -27,7 +27,7 @@ trap 'echo -e "\n\n${RED}${ERROR_EMOJI_V2} Script interrupted. Exiting with stat
 display_banner() {
   echo -e "${CYAN}"
   figlet XE-Gen11
-  echo -e "${WHITE}A Free/Paid VPS Hosting Company with 1.6K+ Members (discord.gg/kvm)${RESET}"
+  echo -e "${WHITE}A Free/Paid VPS Hosting Company with 2.5K+ Members (discord.gg/kvm)${RESET}"
   echo -e "${GREEN}======================================${RESET}"
   echo
   echo -e "Node Usage${RESET}"
