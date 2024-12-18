@@ -112,7 +112,7 @@ chmod +x /usr/bin/port
 
 sed -i 's/^#\?\s*PermitRootLogin\s\+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
 
-sleep 5
+sleep 1.5
 
 systemctl restart ssh > /dev/null
 
