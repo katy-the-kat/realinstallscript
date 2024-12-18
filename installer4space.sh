@@ -107,9 +107,12 @@ case "$1" in
         ;;
 esac
 ' > /usr/bin/port
-chmod +x /usr/bin/port
-sed -i 's/^#\?\s*PermitRootLogin\s\+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
-systemctl restart sshd
 
+chmod +x /usr/bin/port
+
+sed -i 's/^#\?\s*PermitRootLogin\s\+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+systemctl restart sshd > /dev/null
+systemctl restart ssh > /dev/null
 
 
