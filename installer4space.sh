@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Usage: wget https://raw.githubusercontent.com/katy-the-kat/realinstallscript/refs/heads/main/installer4space.sh && bash installer4space.sh
-
 touch /ports.txt
 echo '#!/bin/bash
 
@@ -31,12 +29,12 @@ add_port() {
         random_port=$(shuf -i 1-65534 -n 1)
     done
     
-    nohup ssh -o StrictHostKeyChecking=no -N -R ${random_port}:localhost:${local_port} root@213.191.216.34 -p 65535 &
+    nohup ssh -o StrictHostKeyChecking=no -N -R ${random_port}:localhost:${local_port} root@216.250.248.26 -p 65535 &
     ssh_pid=$!
     
     echo "${random_port}:${local_port}" >> $PORTS_FILE
     
-    echo "${local_port} is now on 213.191.216.34:${random_port}"
+    echo "${local_port} is now on 216.250.248.26:${random_port}"
 }
 
 remove_port() {
@@ -53,7 +51,7 @@ remove_port() {
         exit 1
     fi
     
-    pkill -f "nohup ssh -o StrictHostKeyChecking=no -f -N -R ${random_port}:localhost:${local_port} root@213.191.216.34 -p 65535"
+    pkill -f "nohup ssh -o StrictHostKeyChecking=no -f -N -R ${random_port}:localhost:${local_port} root@216.250.248.26 -p 65535"
     
     sed -i "/${random_port}:${local_port}/d" $PORTS_FILE > /dev/null
     
@@ -70,7 +68,7 @@ refresh_ports() {
         random_port=$(echo $line | cut -d':' -f1)
         local_port=$(echo $line | cut -d':' -f2)
         
-        nohup ssh -o StrictHostKeyChecking=no -N -R ${random_port}:localhost:${local_port} root@213.191.216.34 -p 65535 &
+        nohup ssh -o StrictHostKeyChecking=no -N -R ${random_port}:localhost:${local_port} root@216.250.248.26 -p 65535 &
     done < $PORTS_FILE
     
     echo "Ports have been successfully restarted."
@@ -86,7 +84,7 @@ list_ports() {
     while IFS= read -r line; do
         random_port=$(echo $line | cut -d':' -f1)
         local_port=$(echo $line | cut -d':' -f2)
-        echo "Local port ${local_port} -> Public port ${random_port} (213.191.216.34)"
+        echo "Local port ${local_port} -> Public port ${random_port} (216.250.248.26)"
     done < $PORTS_FILE
 }
 
@@ -109,10 +107,7 @@ case "$1" in
         ;;
 esac
 ' > /usr/bin/port
-
 chmod +x /usr/bin/port
-
-echo "Enabling PermitRootLogin in SSH configuration..."
 sed -i 's/^#\?\s*PermitRootLogin\s\+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
 systemctl restart sshd
 
