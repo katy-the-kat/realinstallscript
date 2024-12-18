@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sed -i 's|archive.ubuntu.com|us.archive.ubuntu.com|g' /etc/apt/sources.list
+
 touch /ports.txt
 echo '#!/bin/bash
 
@@ -109,11 +111,6 @@ esac
 ' > /usr/bin/port
 
 chmod +x /usr/bin/port
-
 sed -i 's/^#\?\s*PermitRootLogin\s\+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
-
-sleep 1.5
-
-systemctl restart ssh > /dev/null
-
+systemctl restart ssh
 
