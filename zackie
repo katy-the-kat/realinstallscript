@@ -949,12 +949,16 @@ get_os() {
 }
 
 get_model() {
-    model="PowerEdge R6515"
+    model="PowerEdge R7515"
 }
 #9754
 
+get_gpu() {
+    gpu="62:00.0 Matrox Electronics Systems Ltd. Integrated Matrox G200eR2"
+}
+
 get_cpu() {
-    cpu="AMD EPYC 74F3 (48) @ 3.200Ghz"
+    cpu="AMD EPYC 72F3 (16) @ 3.200Ghz"
 }
 
 get_memory() {
@@ -1099,7 +1103,7 @@ get_memory() {
         ;;
     esac
 
-    memory="${mem_used}${mem_label:-MiB} / 65535MiB"
+    memory="${mem_used}${mem_label:-MiB} / 772494MiB"
 
     # Bars.
     case $memory_display in
