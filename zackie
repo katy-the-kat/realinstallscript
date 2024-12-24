@@ -1103,7 +1103,7 @@ get_memory() {
         ;;
     esac
 
-    memory="${mem_used}${mem_label:-MiB} / 772494MiB"
+    memory="${mem_used}${mem_label:-MiB} / ${mem_total}${mem_label:-MiB} ${mem_perc:+(${mem_perc}%)}"
 
     # Bars.
     case $memory_display in
@@ -1111,7 +1111,7 @@ get_memory() {
         "infobar") memory="${memory} $(bar "${mem_used}" "${mem_total}")" ;;
         "barinfo") memory="$(bar "${mem_used}" "${mem_total}")${info_color} ${memory}" ;;
     esac
-}
+)
 
 get_distro() {
     [[ $distro ]] && return
