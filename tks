@@ -1,0 +1,325 @@
+import discord
+from discord.ext import commands, tasks
+from discord import app_commands
+import os
+import json
+import requests
+import re
+
+intents = discord.Intents.default()
+intents.messages = True
+intents.guilds = True
+intents.members = True
+intents.message_content = True
+
+bot = commands.Bot(command_prefix='!', intents=intents)
+
+@bot.event
+async def on_ready():
+    await bot.tree.sync()
+    print(f'Logged in as {bot.user} (ID: {bot.user.id})')
+    print('------')
+    change_status.start()
+
+@tasks.loop(minutes=1)
+async def change_status():
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="a crypto blockchain"))
+
+if not os.path.exists('data'):
+    os.makedirs('data')
+
+global_balance_file = "data/global_balances.json"
+whitelist = ["id1", "id2"]
+
+def load_global_balances():
+    if os.path.exists(global_balance_file):
+        with open(global_balance_file, 'r') as file:
+            return json.load(file)
+    return {}
+
+def save_global_balances(balances):
+    with open(global_balance_file, 'w') as file:
+        json.dump(balances, file)
+
+@bot.tree.command(name="transfer", description="Transfer TKS to a User.")
+@app_commands.describe(user="The user to transfer tokens to", amount="The amount of tokens to transfer")
+async def transfer(interaction: discord.Interaction, user: discord.User, amount: float):
+    await interaction.response.defer()
+    sender_id = str(interaction.user.id)
+    receiver_id = str(user.id)
+
+    balances = load_global_balances()
+
+    if sender_id not in balances:
+        balances[sender_id] = 0
+    if receiver_id not in balances:
+        balances[receiver_id] = 0
+
+    if amount <= 0 or not isinstance(amount, float) or amount != amount or amount in [float('inf'), float('-inf')]:
+        embed = discord.Embed(
+            title=":x: Invalid Transfer Amount",
+            description="The transfer amount must be a positive number.",
+            color=discord.Color.red()
+        )
+        await interaction.followup.send(embed=embed, ephemeral=True)
+        return
+
+    if balances[sender_id] < amount:
+        embed = discord.Embed(
+            title=":x: Insufficient Funds",
+            description=f"You do not have enough TKS to transfer {amount} TKS to {user.mention}.",
+            color=discord.Color.red()
+        )
+        await interaction.followup.send(embed=embed, ephemeral=True)
+        return
+
+    balances[sender_id] -= amount
+    balances[receiver_id] += amount
+
+    save_global_balances(balances)
+
+    embed = discord.Embed(
+        title="✅ Transfer Successful",
+        description=f"{amount} TKS has been transferred to {user.mention}.",
+        color=discord.Color.green()
+    )
+    await interaction.followup.send(embed=embed)
+
+@bot.tree.command(name="bal", description="Check your Balance.")
+@app_commands.describe(user="The user to check the balance for")
+async def bal(interaction: discord.Interaction, user: discord.User = None):
+    await interaction.response.defer()
+    balances = load_global_balances()
+
+    if user is None:
+        user_id = str(interaction.user.id)
+        balance = balances.get(user_id, 0)
+        embed = discord.Embed(
+            title="Your Balance",
+            description=f"Your balance is {balance} TKS.",
+            color=discord.Color.blue()
+        )
+        await interaction.followup.send(embed=embed)
+    else:
+        user_id = str(user.id)
+        balance = balances.get(user_id, 0)
+        embed = discord.Embed(
+            title=f"{user.display_name}'s Balance",
+            description=f"The balance of {user.display_name} is {balance} TKS.",
+            color=discord.Color.blue()
+        )
+        await interaction.followup.send(embed=embed)
+
+@bot.tree.command(name="give-tks", description="(Admin Only) Give TKS to someone")
+@app_commands.describe(user="The user to give tokens to", amount="The amount of tokens to give")
+async def give(interaction: discord.Interaction, user: discord.User, amount: float):
+    if str(interaction.user.id) not in whitelist:
+        embed = discord.Embed(
+            title=":x: Unauthorized",
+            description="You do not have permission to use this command.",
+            color=discord.Color.red()
+        )
+        await interaction.response.send_message(embed=embed, ephemeral=True)
+        return
+
+    await interaction.response.defer()
+    balances = load_global_balances()
+
+    user_id = str(user.id)
+    if user_id not in balances:
+        balances[user_id] = 0
+
+    balances[user_id] += amount
+    save_global_balances(balances)
+
+    embed = discord.Embed(
+        title="✅ Give Successful",
+        description=f"{amount} TKS given to {user.mention}.",
+        color=discord.Color.green()
+    )
+    await interaction.followup.send(embed=embed)
+
+BLACKLIST_FILE = 'data/blacklisted_urls.json'
+USED_HASHES_FILE = 'data/used_hashes.json'
+
+def is_valid_hash(hash_str):
+    return len(hash_str) == 64 and all(c in '0123456789abcdefABCDEF' for c in hash_str)
+
+def load_blacklist():
+    try:
+        with open(BLACKLIST_FILE, 'r') as file:
+            return json.load(file)
+    except FileNotFoundError:
+        return []
+
+def save_blacklist(blacklist):
+    with open(BLACKLIST_FILE, 'w') as file:
+        json.dump(blacklist, file, indent=4)
+
+def load_used_hashes():
+    try:
+        with open(USED_HASHES_FILE, 'r') as file:
+            return set(json.load(file))
+    except FileNotFoundError:
+        return set()
+
+def save_used_hashes(used_hashes):
+    with open(USED_HASHES_FILE, 'w') as file:
+        json.dump(list(used_hashes), file, indent=4)
+
+@bot.tree.command(name="claim", description="Provide a link to a file with hashes to claim TKS")
+@app_commands.describe(url="The URL of a .txt file with hashes")
+async def claim(interaction: discord.Interaction, url: str):
+    await interaction.response.defer()
+
+    balances = load_global_balances()
+    used_hashes = load_used_hashes()
+    blacklisted_urls = load_blacklist()
+
+    user_id = str(interaction.user.id)
+    if user_id not in balances:
+        balances[user_id] = 0
+
+    if url in blacklisted_urls:
+        embed = discord.Embed(
+            title="❌ Error",
+            description="This URL has already been processed and is now blacklisted.",
+            color=discord.Color.red()
+        )
+        await interaction.followup.send(embed=embed)
+        return
+
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+
+        lines = response.text.splitlines()
+
+        valid_lines = 0
+        encountered_hashes = set()
+
+        hash_pattern = re.compile(r'\d+\s*\|\s*([a-fA-F0-9]{64})')
+
+        for line in lines:
+            match = hash_pattern.match(line.strip())
+            if match:
+                hash_str = match.group(1)
+
+                if is_valid_hash(hash_str) and hash_str not in used_hashes and hash_str not in encountered_hashes:
+                    encountered_hashes.add(hash_str)
+                    used_hashes.add(hash_str)
+                    valid_lines += 1
+
+        if valid_lines > 0:
+            balances[user_id] += valid_lines
+            save_global_balances(balances)
+            save_used_hashes(used_hashes)
+            embed = discord.Embed(
+                title="✅ Claim Successful",
+                description=f"You have claimed {valid_lines} TKS based on valid and unique hashes.",
+                color=discord.Color.green()
+            )
+        else:
+            embed = discord.Embed(
+                title="❌ No Valid Hashes",
+                description="No valid or unique hashes were found in the provided file.",
+                color=discord.Color.red()
+            )
+
+        blacklisted_urls.append(url)
+        save_blacklist(blacklisted_urls)
+
+        await interaction.followup.send(embed=embed)
+
+    except requests.exceptions.RequestException as e:
+        embed = discord.Embed(
+            title="❌ Error",
+            description=f"There was an issue downloading the file from the provided URL: {e}",
+            color=discord.Color.red()
+        )
+        await interaction.followup.send(embed=embed)
+    except re.error as e:
+        embed = discord.Embed(
+            title="❌ Error",
+            description="There was an issue parsing the hash from the file.",
+            color=discord.Color.red()
+        )
+        await interaction.followup.send(embed=embed)
+    except Exception as e:
+        embed = discord.Embed(
+            title="❌ Error",
+            description="An error occurred while processing the file.",
+            color=discord.Color.red()
+        )
+        await interaction.followup.send(embed=embed)
+
+@bot.tree.command(name="remove-tks", description="(Admin) Remove TKS From a user.")
+@app_commands.describe(user="The user to remove tokens from", amount="The amount of tokens to remove")
+async def remove(interaction: discord.Interaction, user: discord.User, amount: float):
+    if str(interaction.user.id) not in whitelist:
+        embed = discord.Embed(
+            title=":x: Unauthorized",
+            description="You do not have permission to use this command.",
+            color=discord.Color.red()
+        )
+        await interaction.response.send_message(embed=embed, ephemeral=True)
+        return
+
+    await interaction.response.defer()
+    balances = load_global_balances()
+
+    user_id = str(user.id)
+    if user_id not in balances:
+        balances[user_id] = 0
+
+    balances[user_id] = max(balances[user_id] - amount, 0)
+    save_global_balances(balances)
+
+    embed = discord.Embed(
+        title="✅ Remove Successful",
+        description=f"{amount} TKS removed from {user.mention}.",
+        color=discord.Color.red()
+    )
+    await interaction.followup.send(embed=embed)
+
+@bot.tree.command(name="help", description="Get information about TKS Bot.")
+async def help(interaction: discord.Interaction):
+    await interaction.response.defer()
+    embed = discord.Embed(
+        title="Help",
+        description="List of available commands:",
+        color=discord.Color.blue()
+    )
+
+    embed.add_field(name="/transfer", value="Transfer Tokens to users.", inline=False)
+    embed.add_field(name="/bal (user)", value="Check the TKS balance of another user or yourself.", inline=False)
+    embed.add_field(name="/give-tks (user) (amount)", value="(Admin Only) Give TKS to another user.", inline=False)
+    embed.add_field(name="/remove-tks (user) (amount)", value="(Admin) Remove TKS from a user.", inline=False)
+    embed.add_field(name="/claim", value="Upload a file with hashes to claim TKS.", inline=False)
+    embed.add_field(name="/blockchain", value="Get information about TKS blockchain value.", inline=False)
+    embed.add_field(name="/ping", value="Check the bot's latency.", inline=False)
+
+    await interaction.followup.send(embed=embed)
+
+@bot.tree.command(name="blockchain", description="Get information about TKS and its value.")
+async def blockchain(interaction: discord.Interaction):
+    await interaction.response.defer()
+    embed = discord.Embed(
+        title="Blockchain Information",
+        description="1 TKS = 1$",
+        color=discord.Color.blue()
+    )
+    embed.set_image(url="https://example.com/your-image.")
+    await interaction.followup.send(embed=embed)
+
+@bot.tree.command(name="ping", description="Check the bot's latency.")
+async def ping(interaction: discord.Interaction):
+    latency = round(bot.latency * 1000)
+    embed = discord.Embed(
+        title="🏓 Pong!",
+        description=f"Latency: {latency}ms",
+        color=discord.Color.green()
+    )
+    await interaction.response.send_message(embed=embed)
+
+bot.run('')
