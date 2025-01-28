@@ -966,7 +966,7 @@ get_gpu() {
 }
 
 get_gpu2() {
-    gpu="AMD ATL 1a:00.0 Raphael"
+    gpu2="AMD ATL 1a:00.0 Raphael"
 }
 
 get_memory() {
