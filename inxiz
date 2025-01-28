@@ -961,7 +961,8 @@ get_cpu() {
 }
 
 get_gpu() {
-    gpu="62:00.0 Matrox Electronics Systems Ltd. Integrated Matrox G200eR2"
+    gpu="AMD ATI Radeon RX 900 XT/7900 XTX/7900M"
+    gpu="AMD ATL 1a:00.0 Raphael"
 }
 
 get_memory() {
