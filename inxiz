@@ -73,6 +73,7 @@ print_info() {
     info "Terminal Font" term_font
     info "CPU" cpu
     info "GPU" gpu
+    info "GPU" gpu2
     info "Memory" memory
 
     # info "GPU Driver" gpu_driver  # Linux/macOS only
@@ -962,6 +963,9 @@ get_cpu() {
 
 get_gpu() {
     gpu="AMD ATI Radeon RX 900 XT/7900 XTX/7900M"
+}
+
+get_gpu2() {
     gpu="AMD ATL 1a:00.0 Raphael"
 }
 
