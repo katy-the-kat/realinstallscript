@@ -958,7 +958,7 @@ get_model() {
 #9754
 
 get_cpu() {
-    cpu="AMD Ryzen 9 7950X (32) @ 5.881Ghz"
+    cpu="AMD Ryzen 9 7950X (32) @ 6.070Ghz"
 }
 
 get_gpu() {
