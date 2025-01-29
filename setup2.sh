@@ -10,9 +10,7 @@ cat <<EOF > Dockerfile
 FROM ubuntu:22.04
 
 RUN apt-get update 
-RUN apt-get install -y nano htop wget dialog openssh-server openssh-client sudo
-RUN wget -O /usr/bin/neofetch https://raw.githubusercontent.com/katy-the-kat/realinstallscript/refs/heads/main/neofetch.sh
-RUN chmod +x /usr/bin/neofetch
+RUN apt-get install -y nano htop wget dialog openssh-server openssh-client sudo tmate
 RUN wget -O /usr/bin/port https://raw.githubusercontent.com/katy-the-kat/portip/refs/heads/main/pubb.sh
 RUN chmod +x /usr/bin/port
 RUN sed -i 's/^#\?\s*PermitRootLogin\s\+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
