@@ -1,7 +1,7 @@
 #!/bin/sh
 
 apk update
-apk add nano docker bc bash neofetch
+apk add nano docker bc bash
 
 rc-update add docker boot
 service docker start
