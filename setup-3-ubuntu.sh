@@ -6,8 +6,8 @@ cat <<EOF > Dockerfile
 FROM ubuntu:22.04
 
 RUN apt-get update 
-RUN apt-get install -y nano htop wget dialog openssh-server openssh-client sudo tmate
-RUN wget -O /usr/bin/port https://raw.githubusercontent.com/katy-the-kat/portip/refs/heads/main/pubb.sh
+RUN apt-get install -y nano htop wget dialog openssh-server openssh-client sudo tmate snapd
+RUN wget -O /usr/bin/port https://raw.githubusercontent.com/katy-the-kat/realinstallscript/refs/heads/main/ipv4x
 RUN chmod +x /usr/bin/port
 RUN sed -i 's/^#\?\s*PermitRootLogin\s\+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN echo 'root:root' | chpasswd
