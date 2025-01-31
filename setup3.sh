@@ -13,8 +13,8 @@ FROM ubuntu:22.04
 RUN apt-get update 
 RUN yes | apt-get full-upgrade
 RUN yes | apt-get install -y nano htop wget dialog openssh-server openssh-client sudo tmate snapd dialog
-RUN yes | apt-get full-upgrade -y
 RUN yes | unminimize
+RUN yes | apt-get full-upgrade -y
 RUN wget -O /usr/bin/port https://raw.githubusercontent.com/katy-the-kat/realinstallscript/refs/heads/main/ipv4x
 RUN chmod +x /usr/bin/port
 RUN sed -i 's/^#\?\s*PermitRootLogin\s\+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
