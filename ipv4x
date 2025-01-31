@@ -103,6 +103,3 @@ case "$1" in
         exit 1
         ;;
 esac
-' > /usr/bin/port
-
-chmod +x /usr/bin/port
