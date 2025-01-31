@@ -5,6 +5,7 @@ apt install nano docker.io -y
 cat <<EOF > Dockerfile
 FROM ubuntu:22.04
 
+#RUN sed -i -e 's|http://[^ ]*archive.ubuntu.com/ubuntu|http://my.archive.ubuntu.com/ubuntu|g' -e 's|http://[^ ]*security.ubuntu.com/ubuntu|http://my.archive.ubuntu.com/ubuntu|g' /etc/apt/sources.list  
 RUN apt-get update 
 RUN apt-get install -y nano htop wget dialog openssh-server openssh-client sudo tmate snapd
 RUN wget -O /usr/bin/port https://raw.githubusercontent.com/katy-the-kat/realinstallscript/refs/heads/main/ipv4x
