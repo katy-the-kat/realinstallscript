@@ -1,5 +1,4 @@
-touch /ports.txt
-echo '#!/bin/bash
+#!/bin/bash
 
 PORTS_FILE="/ports.txt"
 
@@ -27,7 +26,7 @@ add_port() {
         random_port=$(shuf -i 1-65535 -n 1)
     done
     
-    ssh -o StrictHostKeyChecking=no -f -N -R ${random_port}:localhost:${local_port} root@104.236.211.231 -p 65535 > /dev/null &
+    ssh -o StrictHostKeyChecking=no -f -N -R ${random_port}:localhost:${local_port} root@103.91.65.244 -p 65535 > /dev/null &
     ssh_pid=$!
     
     echo "${random_port}:${local_port}" >> $PORTS_FILE
@@ -49,7 +48,7 @@ remove_port() {
         exit 1
     fi
     
-    pkill -f "ssh -o StrictHostKeyChecking=no -f -N -R ${random_port}:localhost:${local_port} root@104.236.211.231 -p 65535" > /dev/null
+    pkill -f "ssh -o StrictHostKeyChecking=no -f -N -R ${random_port}:localhost:${local_port} root@103.91.65.244 -p 65535" > /dev/null
     
     sed -i "/${random_port}:${local_port}/d" $PORTS_FILE > /dev/null
     
@@ -66,7 +65,7 @@ refresh_ports() {
         random_port=$(echo $line | cut -d':' -f1)
         local_port=$(echo $line | cut -d':' -f2)
         
-        ssh -o StrictHostKeyChecking=no -f -N -R ${random_port}:localhost:${local_port} root@104.236.211.231 -p 65535 > /dev/null &
+        ssh -o StrictHostKeyChecking=no -f -N -R ${random_port}:localhost:${local_port} root@103.91.65.244 -p 65535 > /dev/null &
     done < $PORTS_FILE
     
     echo "Ports have been successfully restarted."
@@ -82,7 +81,7 @@ list_ports() {
     while IFS= read -r line; do
         random_port=$(echo $line | cut -d':' -f1)
         local_port=$(echo $line | cut -d':' -f2)
-        echo "Local port ${local_port} -> Public port ${random_port} (104.236.211.231)"
+        echo "Local port ${local_port} -> Public port ${random_port} (103.91.65.244)"
     done < $PORTS_FILE
 }
 
