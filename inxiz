@@ -53,12 +53,18 @@ export GIO_EXTRA_MODULES=/usr/lib/x86_64-linux-gnu/gio/modules/
 read -rd '' config <<'EOF'
 # See this wiki page for more info:
 # https://github.com/dylanaraps/neofetch/wiki/Customizing-Info
+memoryx="128809MiB"
+modelx="MS-7D67 1.0"
+cpux="AMD Ryzen 9 7950X (32) @ 5.881GHz"
+gpux="AMD ATI Radeon RX 900 XT/7900 XTX/7900M"
+gpux="AMD ATL 1a:00.0 Raphael"
+
 print_info() {
     info title
     info underline
 
     info "OS" distro
-    info "Host" model
+    info "Host" modelx
     info "Kernel" kernel
     info "Uptime" uptime
     info "Packages" packages
@@ -71,10 +77,9 @@ print_info() {
     info "Icons" icons
     info "Terminal" term
     info "Terminal Font" term_font
-    info "CPU" cpu
-    info "GPU" gpu
-    info "GPU" gpu2
-    info "Memory" memory
+    info "CPU" cpux
+    info "GPU" gpux
+    info "Memory" memoryx
 
     # info "GPU Driver" gpu_driver  # Linux/macOS only
     # info "CPU Usage" cpu_usage
