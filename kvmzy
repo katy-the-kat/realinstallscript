@@ -950,20 +950,15 @@ get_os() {
 }
 
 get_model() {
-    model="KVM/QEMU Standard PC (i440FX + PIIX, 1996) (pc-i440fx-7.2)"
+    model="ASUSTeK COMPUTER INC. PRIME X570-P"
 }
 #9754
 
 get_gpux() {
     gpux="NVIDIA GeForce RTX 4060 Ti"
 }
-
-get_gpux2() {
-    gpux2="Unknown Device 1111 (VGA compatible)"
-}
-
 get_cpu() {
-    cpu="AMD Ryzen 9 5950X (32) @ 3.400Ghz"
+    cpu="AMD Ryzen 9 5950X (32) @ 4.000GHz"
 }
 
 #memory="10MiB / 4718592MiB"
@@ -1098,7 +1093,7 @@ get_memory() {
         ;;
     esac
 
-    memory="${mem_used}${mem_label:-MiB} / 128826MiB"
+    memory="${mem_used}${mem_label:-MiB} / 64272MiB"
 
     # Bars.
     case $memory_display in
